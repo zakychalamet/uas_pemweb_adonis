@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Kegiatan - EVORG</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+</head>
+<body class="bg-gray-50 min-h-screen">
+  <!-- Header -->
+  <header class="bg-white shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center py-6">
+        <h1 class="text-3xl font-bold text-gray-900">EVORG - Event Organizer</h1>
+        <div class="flex space-x-4">
+          <a href="/dashboard" class="text-blue-600 hover:text-blue-800 font-medium transition duration-200">Dashboard</a>
+          <form method="POST" action="/logout" class="inline">
+            {{ csrfField() }}
+            <button type="submit" class="text-red-600 hover:text-red-800 font-medium transition duration-200">Logout</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-center">
+      <div class="bg-white p-8 shadow-md rounded-lg w-full max-w-md">
+        <h2 class="text-2xl font-bold text-gray-900 mb-6">Edit Kegiatan</h2>
+
+        <!-- Error Message -->
+        @if(flashMessages.has('error'))
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+          {{ flashMessages.get('error') }}
+        </div>
+        @endif
+
+        <form id="editForm" onsubmit="submitForm(event)">
+          {{ csrfField() }}
+
+          <!-- Nama -->
+          <div class="mb-6">
+            <label for="nama" class="block text-sm font-medium text-gray-700 mb-2">Nama</label>
+            <input
+              type="text"
+              name="nama"
+              id="nama"
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+              value="{{ flashMessages.get('old.nama', kegiatan.nama) }}"
+              required
+            >
+            @if(flashMessages.has('errors.nama'))
+            <div class="text-red-600 text-sm mt-1">{{ flashMessages.get('errors.nama') }}</div>
+            @endif
+          </div>
+
+          <!-- Tanggal Pelaksanaan -->
+          <div class="mb-6">
+            <label for="tglPelaksanaan" class="block text-sm font-medium text-gray-700 mb-2">Tanggal Pelaksanaan</label>
+            <input
+              type="date"
+              name="tglPelaksanaan"
+              id="tglPelaksanaan"
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+              value="{{ flashMessages.get('old.tglPelaksanaan', kegiatan.tglPelaksanaan.toISODate()) }}"
+              required
+            >
+            @if(flashMessages.has('errors.tglPelaksanaan'))
+            <div class="text-red-600 text-sm mt-1">{{ flashMessages.get('errors.tglPelaksanaan') }}</div>
+            @endif
+          </div>
+
+          <!-- Organisasi -->
+          <div class="mb-6">
+            <label for="organisasiId" class="block text-sm font-medium text-gray-700 mb-2">Organisasi</label>
+            <select
+              name="organisasiId"
+              id="organisasiId"
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+              required
+            >
+              <option value="">-- Pilih Organisasi --</option>
+              @if(organisasis && organisasis.length > 0)
+                @each(org in organisasis)
+                  <option value="{{ org.id }}" {{ (flashMessages.get('old.organisasiId') || kegiatan.organisasiId) == org.id ? 'selected' : '' }}>
+                    {{ org.namaOrganisasi }}
+                  </option>
+                @endeach
+              @endif
+            </select>
+            @if(flashMessages.has('errors.organisasiId'))
+            <div class="text-red-600 text-sm mt-1">{{ flashMessages.get('errors.organisasiId') }}</div>
+            @endif
+          </div>
+
+          <!-- Lokasi -->
+          <div class="mb-6">
+            <label for="lokasiId" class="block text-sm font-medium text-gray-700 mb-2">Lokasi</label>
+            <select
+              name="lokasiId"
+              id="lokasiId"
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+              required
+            >
+              <option value="">-- Pilih Lokasi --</option>
+              @if(lokasis && lokasis.length > 0)
+                @each(lok in lokasis)
+                  <option value="{{ lok.id }}" {{ (flashMessages.get('old.lokasiId') || kegiatan.lokasiId) == lok.id ? 'selected' : '' }}>
+                    {{ lok.namaLokasi }}
+                  </option>
+                @endeach
+              @endif
+            </select>
+            @if(flashMessages.has('errors.lokasiId'))
+            <div class="text-red-600 text-sm mt-1">{{ flashMessages.get('errors.lokasiId') }}</div>
+            @endif
+          </div>
+
+          <!-- Tombol -->
+          <div class="flex justify-between items-center">
+            <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition duration-200 font-medium">
+              Simpan
+            </button>
+            <a href="/kegiatan" class="text-gray-600 hover:text-gray-800 font-medium transition duration-200">Batal</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    function submitForm(event) {
+      event.preventDefault();
+      
+      const form = event.target;
+      const formData = new FormData(form);
+      
+      fetch('/kegiatan/{{ kegiatan.id }}', {
+        method: 'PUT',
+        body: formData,
+        headers: {
+          'X-CSRF-TOKEN': document.querySelector('input[name="_csrf"]').value
+        }
+      })
+      .then(response => {
+        if (response.redirected) {
+          window.location.href = response.url;
+        } else {
+          return response.text();
+        }
+      })
+      .then(html => {
+        if (html) {
+          // If there's an error, replace the page content
+          document.documentElement.innerHTML = html;
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('Terjadi kesalahan saat menyimpan data');
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard - EVORG</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" />
+</head>
+<body class="bg-gray-50 min-h-screen text-gray-800 font-sans">
+
+  <!-- Header Navigation -->
+  <header class="bg-white shadow-sm border-b mb-6">
+    <div class="container mx-auto px-4 py-4 space-y-4">
+
+      <!-- Navigation Menu -->
+      <nav class="flex flex-wrap gap-6 text-sm sm:text-base">
+        <a href="/" class="text-blue-600 font-medium border-b-2 border-blue-600 pb-1">Dashboard</a>
+        <a href="/organisasi" class="text-gray-600 hover:text-blue-600 pb-1">Organisasi</a>
+        <a href="/lokasi" class="text-gray-600 hover:text-blue-600 pb-1">Lokasi</a>
+        <a href="/kegiatan" class="text-gray-600 hover:text-blue-600 pb-1">Kegiatan</a>
+        <a href="/anggota" class="text-gray-600 hover:text-blue-600 pb-1">Anggota</a>
+        <a href="/kepanitiaan" class="text-gray-600 hover:text-blue-600 pb-1">Kepanitiaan</a>
+        <a href="/laporan" class="text-gray-600 hover:text-blue-600 pb-1">Laporan</a>
+      </nav>
+
+    
+      <div class="flex items-center gap-3 pt-2">
+        <h1 class="text-2xl font-bold text-blue-600">EVORG - Event Organizer</h1>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container mx-auto px-4 pb-12">
+    <div class="flex flex-col space-y-6">
+
+      <a href="/organisasi" class="w-full rounded-xl p-6 flex items-center justify-between bg-blue-100 hover:shadow-lg transition-all duration-300">
+        <div class="flex items-center gap-4">
+          <i class="bi bi-building text-4xl text-gray-800"></i>
+          <div>
+            <h3 class="text-xl font-semibold">Organisasi</h3>
+            <p class="text-sm text-gray-700">Kelola data organisasi</p>
+          </div>
+        </div>
+        <div class="text-blue-600 font-semibold text-md">Lihat →</div>
+      </a>
+
+      <a href="/lokasi" class="w-full rounded-xl p-6 flex items-center justify-between bg-green-100 hover:shadow-lg transition-all duration-300">
+        <div class="flex items-center gap-4">
+          <i class="bi bi-geo-alt text-4xl text-gray-800"></i>
+          <div>
+            <h3 class="text-xl font-semibold">Lokasi</h3>
+            <p class="text-sm text-gray-700">Data lokasi kegiatan</p>
+          </div>
+        </div>
+        <div class="text-green-600 font-semibold text-md">Lihat →</div>
+      </a>
+
+      <a href="/kegiatan" class="w-full rounded-xl p-6 flex items-center justify-between bg-yellow-100 hover:shadow-lg transition-all duration-300">
+        <div class="flex items-center gap-4">
+          <i class="bi bi-calendar-event text-4xl text-gray-800"></i>
+          <div>
+            <h3 class="text-xl font-semibold">Kegiatan</h3>
+            <p class="text-sm text-gray-700">Lihat & tambah kegiatan</p>
+          </div>
+        </div>
+        <div class="text-yellow-600 font-semibold text-md">Lihat →</div>
+      </a>
+
+      <a href="/anggota" class="w-full rounded-xl p-6 flex items-center justify-between bg-pink-100 hover:shadow-lg transition-all duration-300">
+        <div class="flex items-center gap-4">
+          <i class="bi bi-person-lines-fill text-4xl text-gray-800"></i>
+          <div>
+            <h3 class="text-xl font-semibold">Anggota</h3>
+            <p class="text-sm text-gray-700">Manajemen anggota organisasi</p>
+          </div>
+        </div>
+        <div class="text-pink-600 font-semibold text-md">Lihat →</div>
+      </a>
+
+      <a href="/kepanitiaan" class="w-full rounded-xl p-6 flex items-center justify-between bg-sky-100 hover:shadow-lg transition-all duration-300">
+        <div class="flex items-center gap-4">
+          <i class="bi bi-clipboard-data text-4xl text-gray-800"></i>
+          <div>
+            <h3 class="text-xl font-semibold">Kepanitiaan</h3>
+            <p class="text-sm text-gray-700">Struktur dan peran panitia</p>
+          </div>
+        </div>
+        <div class="text-sky-600 font-semibold text-md">Lihat →</div>
+      </a>
+
+      <a href="/laporan" class="w-full rounded-xl p-6 flex items-center justify-between bg-purple-100 hover:shadow-lg transition-all duration-300">
+        <div class="flex items-center gap-4">
+          <i class="bi bi-bar-chart-line text-4xl text-gray-800"></i>
+          <div>
+            <h3 class="text-xl font-semibold">Laporan</h3>
+            <p class="text-sm text-gray-700">Daftar kegiatan & jumlah panitia</p>
+          </div>
+        </div>
+        <div class="text-purple-600 font-semibold text-md">Lihat →</div>
+      </a>
+
+    </div>
+  </main>
+
+</body>
+</html>
